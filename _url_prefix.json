@@ -1,0 +1,7 @@
+{
+    "draft":"https://api.sleeper.app/v1/draft/",
+    "player":"https://api.sleeper.app/v1/players/",
+    "roster":"https://api.sleeper.app/v1/league/",
+    "transaction":"https://api.sleeper.app/v1/league/",
+    "user":"https://api.sleeper.app/v1/league/"
+}
