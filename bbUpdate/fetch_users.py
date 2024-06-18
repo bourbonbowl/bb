@@ -24,3 +24,10 @@ def go():
             ul = bbUpdate.config.bucket.blob(fp + year + '/' + fn)
             ul.cache_control = 'no-store'
             ul.upload_from_filename(fn)
+
+def preview_db():
+    users = json.loads(bbUpdate.config.bucket.blob('resources/data/' + bbUpdate.config.current_league_year + '/users.json').download_as_string())
+    print('previewing current users db file')
+    for index,value in enumerate(users):
+        if index < 1:
+            print(json.dumps(value,indent=4))
