@@ -32,3 +32,15 @@ def go():
                 ul = bbUpdate.config.bucket.blob(fp + year + '/transactions/' + 'week_' + week_string + '/' + fn)
                 ul.cache_control = 'no-store'
                 ul.upload_from_filename(fn)
+
+def preview_db(w):
+    single_digits = [1,2,3,4,5,6,7,8,9]
+    if w in single_digits:
+        week_string = '0' + str(w)
+    else:
+        week_string = str(w)
+    transactions = json.loads(bbUpdate.config.bucket.blob('resources/data/' + bbUpdate.config.current_league_year + '/transactions/' + 'week_' + week_string + '/transactions.json').download_as_string())
+    print('previewing transactions for current year, week: ' + week_string + 'from db file')
+    for index,value in enumerate(transactions):
+        if index < 1:
+            print(json.dumps(value,indent=4))
