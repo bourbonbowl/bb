@@ -5,7 +5,7 @@ import random
 import datetime
 import bbUpdate
 
-def go():
+def update_db():
 	players = json.loads(requests.get(bbUpdate.config.url_pre['player'] + bbUpdate.config.url_suf['player']).text)
 	with open('players.json','w') as f:
 		json.dump(players,f,indent=4)

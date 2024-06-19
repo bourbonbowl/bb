@@ -25,3 +25,25 @@ def go():
             ul = bbUpdate.config.bucket.blob(fp + year + '/' + fn)
             ul.cache_control = 'no-store'
             ul.upload_from_filename(fn)
+
+def get_db():
+    rosters = json.loads(bbUpdate.config.bucket.blob('resources/data/' + bbUpdate.config.current_league_year + '/rosters.json').download_as_string())
+    return rosters
+
+def get_api():
+    rosters = json.loads(requests.get(bbUpdate.config.url_pre['roster'] + bbUpdate.config.current_league_id + bbUpdate.config.url_suf['roster']).text)
+    return rosters
+
+def preview_db():
+    rosters = get_db()
+    print('previewing current rosters db file')
+    for index,value in enumerate(rosters):
+        if index < 1:
+            print(json.dumps(value,indent=4))
+
+def preview_api():
+    rosters = get_api()
+    print('previewing current users via api')
+    for index,value in enumerate(rosters):
+        if index < 1:
+            print(json.dumps(value,indent=4))
