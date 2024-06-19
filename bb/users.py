@@ -15,17 +15,32 @@ def get_api():
 
 def preview_db():
     users = get_db()
-    print('previewing current users db file')
+    print("-------------------------------------")
+    print('PREVIEWING USERS DB FILE')
+    print("-------------------------------------")
+    print('TYPE: LIST OF DICT WITH KEYS:')
+    print(users[0].keys())
+    print("-------------------------------------")
+    print('SAMPLE RECORD:')
     for index,value in enumerate(users):
-        if index < 15:
-            print(json.dumps(value['display_name'],indent=4))
+        if index < 1:
+            print(json.dumps(value,indent=4))
+    print("-------------------------------------")
 
 def preview_api():
     users = get_api()
-    print('previewing current users via api')
+    print("-------------------------------------")
+    print('PREVIEWING USERS API RESULT')
+    print("-------------------------------------")
+    print('TYPE: LIST OF DICT WITH KEYS:')
+    print(users[0].keys())
+    print("-------------------------------------")
+    print('SAMPLE RECORD:')
     for index,value in enumerate(users):
-        if index < 15:
-            print(json.dumps(value['display_name'],indent=4))
+        if index < 1:
+            print(json.dumps(value,indent=4))
+    print("-------------------------------------")
+
 
 def update_db():
     lg_fetch = []

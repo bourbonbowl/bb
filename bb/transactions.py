@@ -26,16 +26,31 @@ def preview_db(w):
         week_string = '0' + str(w)
     else:
         week_string = str(w)
-    print('previewing transactions for current year, week: ' + week_string + 'from db file')
+    print("-------------------------------------")
+    print('PREVIEWING TRANSACTIONS DB FILE FOR ' + bb.config.current_league_year + ' WEEK: ' + week_string)
+    print("-------------------------------------")
+    print('TYPE: LIST OF DICT WITH KEYS:')
+    print(transactions[0].keys())
+    print("-------------------------------------")
+    print('SAMPLE RECORD:')
     for index,value in enumerate(transactions):
         if index < 1:
             print(json.dumps(value,indent=4))
+    print("-------------------------------------")
 
 def preview_api(w):
     transactions = get_api(w)
+    print("-------------------------------------")
+    print('PREVIEWING TRANSACTIONS API RESULT FOR ' + bb.config.current_league_year + ' WEEK: ' + str(w))
+    print("-------------------------------------")
+    print('TYPE: LIST OF DICT WITH KEYS:')
+    print(transactions[0].keys())
+    print("-------------------------------------")
+    print('SAMPLE RECORD:')
     for index,value in enumerate(transactions):
         if index < 1:
             print(json.dumps(value,indent=4))
+    print("-------------------------------------")
 
 def update_db():
     lg_fetch = []

@@ -20,7 +20,7 @@ def preview_db():
     print("-------------------------------------")
     print('TYPE: LIST OF DICT WITH KEYS:')
     print(rosters[1].keys())
-    print(" ")
+    print("-------------------------------------")
     print('SAMPLE RECORD:')
     for index,value in enumerate(rosters):
         if index < 1:
@@ -30,11 +30,11 @@ def preview_db():
 def preview_api():
     rosters = get_api()
     print("-------------------------------------")
-    print('PREVIEWING ROSTERS API FILE')
+    print('PREVIEWING ROSTERS API RESULT')
     print("-------------------------------------")
     print('TYPE: LIST OF DICT WITH KEYS:')
     print(rosters[1].keys())
-    print(" ")
+    print("-------------------------------------")
     print('SAMPLE RECORD:')
     for index,value in enumerate(rosters):
         if index < 1:

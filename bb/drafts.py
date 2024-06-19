@@ -16,17 +16,31 @@ def get_api():
 
 def preview_db():
     drafts = get_db()
-    print('previewing current drafts db file')
+    print("-------------------------------------")
+    print('PREVIEWING DRAFT DB FILE')
+    print("-------------------------------------")
+    print('TYPE: LIST OF DICT WITH KEYS:')
+    print(drafts[0].keys())
+    print("-------------------------------------")
+    print('SAMPLE RECORD:')
     for index,value in enumerate(drafts):
         if index < 3:
             print(json.dumps(value,indent=4))
+    print("-------------------------------------")
 
 def preview_api():
     drafts = get_api()
-    print('previewing current drafts via api')
+    print("-------------------------------------")
+    print('PREVIEWING DRAFT API RESULT')
+    print("-------------------------------------")
+    print('TYPE: LIST OF DICT WITH KEYS:')
+    print(drafts[0].keys())
+    print("-------------------------------------")
+    print('SAMPLE RECORD:')
     for index,value in enumerate(drafts):
         if index < 3:
             print(json.dumps(value,indent=4))
+    print("-------------------------------------")
 
 def update_db():
     draft_fetch = []
