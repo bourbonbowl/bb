@@ -15,17 +15,31 @@ def get_api():
 
 def preview_db():
     rosters = get_db()
-    print('previewing current rosters db file')
+    print("-------------------------------------")
+    print('PREVIEWING ROSTERS DB FILE')
+    print("-------------------------------------")
+    print('TYPE: LIST OF DICT WITH KEYS:')
+    print(rosters[1].keys())
+    print(" ")
+    print('SAMPLE RECORD:')
     for index,value in enumerate(rosters):
         if index < 1:
             print(json.dumps(value,indent=4))
+    print("-------------------------------------")
 
 def preview_api():
     rosters = get_api()
-    print('previewing current users via api')
+    print("-------------------------------------")
+    print('PREVIEWING ROSTERS API FILE')
+    print("-------------------------------------")
+    print('TYPE: LIST OF DICT WITH KEYS:')
+    print(rosters[1].keys())
+    print(" ")
+    print('SAMPLE RECORD:')
     for index,value in enumerate(rosters):
         if index < 1:
             print(json.dumps(value,indent=4))
+    print("-------------------------------------")
         
 def update_db():
     roster_fetch = []
