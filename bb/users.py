@@ -3,14 +3,14 @@ import requests
 from google.cloud import storage
 import random
 import datetime
-import bbUpdate
+import bb
 
 def get_db():
-    users = json.loads(bbUpdate.config.bucket.blob('resources/data/' + bbUpdate.config.current_league_year + '/users.json').download_as_string())
+    users = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/users.json').download_as_string())
     return users
 
 def get_api():
-    users = json.loads(requests.get(bbUpdate.config.url_pre['user'] + bbUpdate.config.current_league_id + bbUpdate.config.url_suf['user']).text)
+    users = json.loads(requests.get(bb.config.url_pre['user'] + bb.config.current_league_id + bb.config.url_suf['user']).text)
     return users
 
 def preview_db():
@@ -29,20 +29,20 @@ def preview_api():
 
 def update_db():
     lg_fetch = []
-    for i in bbUpdate.config.league_info.keys():
-        if bbUpdate.config.league_info[i]['archived'] == False:
-            print('users - ' + bbUpdate.config.league_info[i]['year'] + ': league is not archived, fetching data')
+    for i in bb.config.league_info.keys():
+        if bb.config.league_info[i]['archived'] == False:
+            print('users - ' + bb.config.league_info[i]['year'] + ': league is not archived, fetching data')
             lg_fetch.append(i)
         else:
-            print('users - ' + bbUpdate.config.league_info[i]['year'] + ': league is archived, using archived data')
+            print('users - ' + bb.config.league_info[i]['year'] + ': league is archived, using archived data')
     for i in lg_fetch:
-        year = bbUpdate.config.league_info[i]['year']
-        users = json.loads(requests.get(bbUpdate.config.url_pre['user'] + bbUpdate.config.current_league_id + bbUpdate.config.url_suf['user']).text)
+        year = bb.config.league_info[i]['year']
+        users = json.loads(requests.get(bb.config.url_pre['user'] + bb.config.current_league_id + bb.config.url_suf['user']).text)
         with open('users.json','w') as f:
             json.dump(users,f,indent=4)
             f.close()
             fp = 'resources/data/'
             fn = 'users.json'
-            ul = bbUpdate.config.bucket.blob(fp + year + '/' + fn)
+            ul = bb.config.bucket.blob(fp + year + '/' + fn)
             ul.cache_control = 'no-store'
             ul.upload_from_filename(fn)

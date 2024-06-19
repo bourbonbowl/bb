@@ -3,13 +3,13 @@ import requests
 from google.cloud import storage
 import random
 import datetime
-import bbUpdate
+import bb
 
 
 def go():
     # get players
-    players = json.loads(bbUpdate.config.bucket.blob('resources/data/' + 'players.json').download_as_string())
-    users = json.loads(bbUpdate.config.bucket.blob('resources/data/' + bbUpdate.config.current_league_year + '/users.json').download_as_string())
+    players = json.loads(bb.config.bucket.blob('resources/data/' + 'players.json').download_as_string())
+    users = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/users.json').download_as_string())
 
     # compile user display name
     bb_users = {}
@@ -20,7 +20,7 @@ def go():
             bb_users.update({user['user_id']:user['display_name']})
 
     # compile rostered players
-    roster = json.loads(bbUpdate.config.bucket.blob('resources/data/' + bbUpdate.config.current_league_year + '/rosters.json').download_as_string())
+    roster = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/rosters.json').download_as_string())
     bb_rostered_players = {}
     for team in roster:
         for player in team['players']:
@@ -34,7 +34,7 @@ def go():
         bb_roster[team['roster_id']] = entry
 
     # compile draft
-    draft = json.loads(bbUpdate.config.bucket.blob('resources/data/' + bbUpdate.config.current_league_year + '/drafts/drafts.json').download_as_string())
+    draft = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/drafts/drafts.json').download_as_string())
     bb_draft = {}
     for selection in draft:
         entry = {'amount':selection['metadata']['amount'],'picked_by':selection['picked_by'],'is_keeper':selection['is_keeper']}
@@ -48,9 +48,9 @@ def go():
     weeks = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
     for week in weeks:
         if week in [1,2,3,4,5,6,7,8,9]:
-            transactions = json.loads(bbUpdate.config.bucket.blob('resources/data/' + bbUpdate.config.current_league_year + '/transactions/week_0' + str(week) + '/transactions.json').download_as_string())
+            transactions = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/transactions/week_0' + str(week) + '/transactions.json').download_as_string())
         else:
-            transactions = json.loads(bbUpdate.config.bucket.blob('resources/data/' + bbUpdate.config.current_league_year + '/transactions/week_' + str(week) + '/transactions.json').download_as_string())
+            transactions = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/transactions/week_' + str(week) + '/transactions.json').download_as_string())
         for i in transactions:
             if i['type']=='waiver' and i['status']=='complete':
                 for key in i['adds']:
