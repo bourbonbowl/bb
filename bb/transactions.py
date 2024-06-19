@@ -3,7 +3,7 @@ import requests
 from google.cloud import storage
 import random
 import datetime
-import bbUpdate
+import bb
 
 def get_db(w):
     single_digits = [1,2,3,4,5,6,7,8,9]
@@ -11,11 +11,11 @@ def get_db(w):
         week_string = '0' + str(w)
     else:
         week_string = str(w)
-    transactions = json.loads(bbUpdate.config.bucket.blob('resources/data/' + bbUpdate.config.current_league_year + '/transactions/' + 'week_' + week_string + '/transactions.json').download_as_string())
+    transactions = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/transactions/' + 'week_' + week_string + '/transactions.json').download_as_string())
     return transactions
 
 def get_api(w):
-    transactions_url = bbUpdate.config.url_pre['transaction'] + bbUpdate.config.current_league_id + bbUpdate.config.url_suf['transaction'] + str(w)
+    transactions_url = bb.config.url_pre['transaction'] + bb.config.current_league_id + bb.config.url_suf['transaction'] + str(w)
     transactions = json.loads(requests.get(transactions_url).text)
     return transactions
     
@@ -39,17 +39,17 @@ def preview_api(w):
 
 def update_db():
     lg_fetch = []
-    for i in bbUpdate.config.league_info.keys():
-        if bbUpdate.config.league_info[i]['archived'] == False:
-            print('transactions - ' + bbUpdate.config.league_info[i]['year'] + ': league is not archived, fetching data')
+    for i in bb.config.league_info.keys():
+        if bb.config.league_info[i]['archived'] == False:
+            print('transactions - ' + bb.config.league_info[i]['year'] + ': league is not archived, fetching data')
             lg_fetch.append(i)
         else:
-            print('transactions - ' + bbUpdate.config.league_info[i]['year'] + ': league is archived, using archived data')
+            print('transactions - ' + bb.config.league_info[i]['year'] + ': league is archived, using archived data')
     for i in lg_fetch:
-        year = bbUpdate.config.league_info[i]['year']
+        year = bb.config.league_info[i]['year']
         weeks = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
         for w in weeks:
-            transactions_url = bbUpdate.config.url_pre['transaction'] + i + bbUpdate.config.url_suf['transaction'] + str(w)
+            transactions_url = bb.config.url_pre['transaction'] + i + bb.config.url_suf['transaction'] + str(w)
             transactions = json.loads(requests.get(transactions_url).text)
             with open('transactions.json','w') as f:
                 json.dump(transactions,f,indent=4)
@@ -61,6 +61,6 @@ def update_db():
                     week_string = '0' + str(w)
                 else:
                     week_string = str(w)
-                ul = bbUpdate.config.bucket.blob(fp + year + '/transactions/' + 'week_' + week_string + '/' + fn)
+                ul = bb.config.bucket.blob(fp + year + '/transactions/' + 'week_' + week_string + '/' + fn)
                 ul.cache_control = 'no-store'
                 ul.upload_from_filename(fn)
