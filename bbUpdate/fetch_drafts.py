@@ -32,3 +32,26 @@ def go():
                         ul = bbUpdate.config.bucket.blob(fp + year + '/drafts/' + fn)
                         ul.cache_control = 'no-store'
                         ul.upload_from_filename(fn)
+
+def get_db():
+    drafts = json.loads(bbUpdate.config.bucket.blob('resources/data/' + bbUpdate.config.current_league_year + '/drafts/drafts.json').download_as_string())
+    return drafts
+
+def get_api():
+    drafts_url = bbUpdate.config.url_pre['draft'] + bbUpdate.config.league_info[bbUpdate.config.current_league_id]['draft_id'] + bbUpdate.config.url_suf['draft']
+    drafts = json.loads(requests.get(drafts_url).text)
+    return drafts
+
+def preview_db():
+    drafts = get_db()
+    print('previewing current drafts db file')
+    for index,value in enumerate(drafts):
+        if index < 3:
+            print(json.dumps(value,indent=4))
+
+def preview_api():
+    drafts = get_api()
+    print('previewing current drafts via api')
+    for index,value in enumerate(drafts):
+        if index < 3:
+            print(json.dumps(value,indent=4))

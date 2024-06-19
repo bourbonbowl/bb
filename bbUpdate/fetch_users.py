@@ -25,15 +25,23 @@ def go():
             ul.cache_control = 'no-store'
             ul.upload_from_filename(fn)
 
-def preview_db():
+def get_db():
     users = json.loads(bbUpdate.config.bucket.blob('resources/data/' + bbUpdate.config.current_league_year + '/users.json').download_as_string())
+    return users
+
+def get_api():
+    users = json.loads(requests.get(bbUpdate.config.url_pre['user'] + bbUpdate.config.current_league_id + bbUpdate.config.url_suf['user']).text)
+    return users
+
+def preview_db():
+    users = get_db()
     print('previewing current users db file')
     for index,value in enumerate(users):
         if index < 15:
             print(json.dumps(value['display_name'],indent=4))
 
 def preview_api():
-    users = json.loads(requests.get(bbUpdate.config.url_pre['user'] + bbUpdate.config.current_league_id + bbUpdate.config.url_suf['user']).text)
+    users = get_api()
     print('previewing current users via api')
     for index,value in enumerate(users):
         if index < 15:
