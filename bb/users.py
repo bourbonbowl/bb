@@ -61,3 +61,12 @@ def update_db():
             ul = bb.config.bucket.blob(fp + year + '/' + fn)
             ul.cache_control = 'no-store'
             ul.upload_from_filename(fn)
+
+def lookupTeam(user_id):
+     users = bb.users.get_db()
+     for i in users:
+             if i['user_id'] == str(user_id):
+                     try:
+                        return i['metadata']['team_name']
+                     except:
+                        return i['display_name']
