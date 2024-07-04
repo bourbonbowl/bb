@@ -3,6 +3,7 @@ import requests
 from google.cloud import storage
 import random
 import datetime
+import pandas
 import bb
 
 
@@ -57,7 +58,35 @@ def go():
                     if key not in bb_completed_waivers:
                         bb_completed_waivers[key] = {}
                         bb_completed_waivers[key].update({i['status_updated']:i['settings']['waiver_bid']})
-            
+
+    # compile transactions for FAABFlow
+    waiver_log = []
+    weeks = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
+    for week in weeks:
+        if week in [1,2,3,4,5,6,7,8,9]:
+            transactions = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/transactions/week_0' + str(week) + '/transactions.json').download_as_string())
+        else:
+            transactions = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/transactions/week_' + str(week) + '/transactions.json').download_as_string())
+        for i in transactions:
+            if i['type']=='waiver':
+                entry = {
+                    'transaction_id':i['transaction_id'],
+                    'player_id':str(list(i['adds'].keys())[0]),
+                    'status_updated':i['status_updated'],
+                    'team':i['creator'],
+                    'bid':i['settings']['waiver_bid'],
+                    'status':i['status']
+                }
+                waiver_log.append(entry)
+    df_waiver_log = pandas.DataFrame(waiver_log)
+    df_waiver_log = df_waiver_log.sort_values(['status_updated','player_id'])
+    print(df_waiver_log.groupby(['status_updated','player_id'])['team'].nunique().to_string())
+    print(df_waiver_log.groupby(['status_updated','player_id'])['bid'].nlargest(2).to_string())
+    print(df_waiver_log.groupby(['status_updated','player_id'])['bid'].rank(method='dense').to_string())
+    
+                
+
+
     # compile most recent pickup
     bb_recent_waiver = {}
     for key, value in bb_completed_waivers.items():
