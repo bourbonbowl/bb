@@ -78,8 +78,45 @@ def go():
                     'status':i['status']
                 }
                 waiver_log.append(entry)
+    # create base dataframe
     df_waiver_log = pandas.DataFrame(waiver_log)
     df_waiver_log = df_waiver_log.sort_values(['status_updated','player_id'])
+    
+    # create df: waivers_complete
+    df_waivers_complete = df_waiver_log[df_waiver_log['status'] == 'complete']
+    #print(df_waivers_complete.to_string())
+    
+    # create df: waivers_failed
+    df_waivers_failed = df_waiver_log[df_waiver_log['status'] == 'failed']
+    #print(df_waivers_failed.to_string())
+
+    # create df: waivers_summary
+    # time, player, total teams bidding
+    df_waivers_summary = df_waiver_log.groupby(['status_updated','player_id'])['team'].nunique()
+    df_waivers_summary = df_waivers_summary
+    df_waivers_summary = df_waivers_summary.reset_index()
+    
+    # create df: waivers_complete_summary
+    # time, player, winner, winner bid
+    df_waivers_complete_summary = df_waivers_complete[['status_updated', 'player_id', 'team', 'bid']].copy().reset_index()
+
+    # create df: waivers_failed_summary
+    # time, player, max bidder, max bidder bid
+
+    # create merged df
+    # get player info
+    # get team info
+    # format date
+    # delta winnng bid and runner up bid
+    # lone ranger flag
+    # free parking flag
+    # on target flag
+    # overpay flag
+    # malpractice flag
+    # sweepstakes flag
+    
+    # create output df
+
     print(df_waiver_log.groupby(['status_updated','player_id'])['team'].nunique().to_string())
     print(df_waiver_log.groupby(['status_updated','player_id'])['bid'].nlargest(2).to_string())
     print(df_waiver_log.groupby(['status_updated','player_id'])['bid'].rank(method='dense').to_string())
