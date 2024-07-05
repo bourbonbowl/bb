@@ -70,10 +70,10 @@ def bb_summary_output():
         else:
             transactions = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/transactions/week_' + str(week) + '/transactions.json').download_as_string())
         for i in transactions:
-                for key in i['adds']:
-                    if key not in bb_completed_waivers:
-                        bb_completed_waivers[key] = {}
-                        bb_completed_waivers[key].update({i['status_updated']:i['settings']['waiver_bid']})
+            for key in i['adds']:
+                if key not in bb_completed_waivers:
+                    bb_completed_waivers[key] = {}
+                    bb_completed_waivers[key].update({i['status_updated']:i['settings']['waiver_bid']})
 
     # compile most recent pickup
     bb_recent_waiver = {}
