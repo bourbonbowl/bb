@@ -11,6 +11,9 @@ import bb
 players = json.loads(requests.get(bb.config.url_pre['player'] + bb.config.url_suf['player']).text)
 
 def lookupTeam(user_id):
+    '''
+    function takes user_id as input and returns team name
+    '''
     users = bb.users.get_db()
     for i in users:
         if i['user_id'] == str(user_id):
@@ -20,11 +23,17 @@ def lookupTeam(user_id):
                 return i['display_name']
 
 def lookupPlayer(id):
+    '''
+    function takes player id as input and returns player name team and position
+    '''
     player_detail = str(players[str(id)]['first_name']) + ' ' + str(players[str(id)]['last_name']) + ' - ' + str(players[str(id)]['team']) + ' - ' + str(players[str(id)]['position'])
     return player_detail
 
 # bb_summary_output
 def bb_summary_output():
+    ''' 
+    function fetches recently saved raw league data, creates and saves summary json and csv output files
+    '''
     # get players
     players = json.loads(bb.config.bucket.blob('resources/data/' + 'players.json').download_as_string())
     users = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/users.json').download_as_string())
@@ -129,6 +138,9 @@ def bb_summary_output():
 
 # faab flow
 def start():
+    ''' 
+    function fetches recently saved raw league transaction data and returns the object waiver_log
+    '''
     waiver_log = []
     weeks = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
     for week in weeks:
@@ -153,6 +165,9 @@ def start():
 
 
 def faab_flow():
+    ''' 
+    function fetches recently saved raw league data, creates and saves faab flow json and csv output files
+    '''
     waiver_log = start()
     # create base dataframe
     df_waiver_log = pandas.DataFrame(waiver_log)
