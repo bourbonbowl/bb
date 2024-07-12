@@ -7,6 +7,9 @@ import bb
 import pandas
 
 def go():
+    ''' 
+    function runs compile functions to update bb_summary and faab_flow db files
+    '''
     bb_summary_output = bb._compile.bb_summary_output()
     random_entry = {
         'Team':'RANDOM TEAM - ' + str(datetime.datetime.now()),

@@ -12,7 +12,7 @@ players = json.loads(requests.get(bb.config.url_pre['player'] + bb.config.url_su
 
 def lookupTeam(user_id):
     '''
-    function takes user_id as input and returns team name
+    function takes user_id and returns team name
     '''
     users = bb.users.get_db()
     for i in users:
@@ -24,7 +24,7 @@ def lookupTeam(user_id):
 
 def lookupPlayer(id):
     '''
-    function takes player id as input and returns player name team and position
+    function takes player id and returns player name team and position
     '''
     player_detail = str(players[str(id)]['first_name']) + ' ' + str(players[str(id)]['last_name']) + ' - ' + str(players[str(id)]['team']) + ' - ' + str(players[str(id)]['position'])
     return player_detail
@@ -247,11 +247,17 @@ def faab_flow():
 
 # preview functions
 def preview_bb_summary_output():
+    ''' 
+    function returns a preview of the db bb_summary_output file
+    '''
     prev = bb_summary_output()
     for index,value in enumerate(prev):
         if index < 5:
             print(value)
 
 def preview_faab_flow():
+    ''' 
+    function returns a preview of the db faab_flow file
+    '''
     prev = faab_flow()
     print(prev)
