@@ -6,6 +6,9 @@ import datetime
 import bb
 
 def get_db(w):
+    '''
+    function take a week number, loads and returns data for that week from the db
+    '''
     single_digits = [1,2,3,4,5,6,7,8,9]
     if w in single_digits:
         week_string = '0' + str(w)
@@ -15,29 +18,56 @@ def get_db(w):
     return transactions
 
 def get_api(w):
+    '''
+    function take a week number, loads and returns data for that week from the api
+    '''
     transactions_url = bb.config.url_pre['transaction'] + bb.config.current_league_id + bb.config.url_suf['transaction'] + str(w)
     transactions = json.loads(requests.get(transactions_url).text)
     return transactions
     
 def preview_db(w):
+    ''' 
+    function take a week number, loads and returns a preview of the data for that week from the db
+    '''
     transactions = get_db(w)
     single_digits = [1,2,3,4,5,6,7,8,9]
     if w in single_digits:
         week_string = '0' + str(w)
     else:
         week_string = str(w)
-    print('previewing transactions for current year, week: ' + week_string + 'from db file')
+    print("-------------------------------------")
+    print('PREVIEWING TRANSACTIONS DB FILE FOR ' + bb.config.current_league_year + ' WEEK: ' + week_string)
+    print("-------------------------------------")
+    print('TYPE: LIST OF DICT WITH KEYS:')
+    print(transactions[0].keys())
+    print("-------------------------------------")
+    print('SAMPLE RECORD:')
     for index,value in enumerate(transactions):
         if index < 1:
             print(json.dumps(value,indent=4))
+    print("-------------------------------------")
 
 def preview_api(w):
+    ''' 
+    function take a week number, loads and returns a preview of the data for that week from the db
+    '''
     transactions = get_api(w)
+    print("-------------------------------------")
+    print('PREVIEWING TRANSACTIONS API RESULT FOR ' + bb.config.current_league_year + ' WEEK: ' + str(w))
+    print("-------------------------------------")
+    print('TYPE: LIST OF DICT WITH KEYS:')
+    print(transactions[0].keys())
+    print("-------------------------------------")
+    print('SAMPLE RECORD:')
     for index,value in enumerate(transactions):
         if index < 1:
             print(json.dumps(value,indent=4))
+    print("-------------------------------------")
 
 def update_db():
+    '''
+    function updates the db data
+    '''
     lg_fetch = []
     for i in bb.config.league_info.keys():
         if bb.config.league_info[i]['archived'] == False:
