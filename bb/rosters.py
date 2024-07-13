@@ -6,14 +6,23 @@ import datetime
 import bb
 
 def get_db():
+    '''
+    function loads and returns data from the db
+    '''
     rosters = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/rosters.json').download_as_string())
     return rosters
 
 def get_api():
+    '''
+    function loads and returns data from the api
+    '''
     rosters = json.loads(requests.get(bb.config.url_pre['roster'] + bb.config.current_league_id + bb.config.url_suf['roster']).text)
     return rosters
 
 def preview_db():
+    ''' 
+    function loads and returns a preview of the db data
+    '''
     rosters = get_db()
     print("-------------------------------------")
     print('PREVIEWING ROSTERS DB FILE')
@@ -28,6 +37,9 @@ def preview_db():
     print("-------------------------------------")
 
 def preview_api():
+    ''' 
+    function loads and returns a preview of the api data
+    '''
     rosters = get_api()
     print("-------------------------------------")
     print('PREVIEWING ROSTERS API RESULT')
@@ -42,6 +54,9 @@ def preview_api():
     print("-------------------------------------")
         
 def update_db():
+    '''
+    function updates the db data
+    '''
     roster_fetch = []
     for i in bb.config.league_info.keys():
         if bb.config.league_info[i]['archived'] == False:

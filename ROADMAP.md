@@ -1,9 +1,12 @@
 ## Roadmap
-- [ ] preview functions for all bbUpdate functions.
-- [ ] .csv league summary output file
-- [ ] bb+ landing page
-- [ ] bb+ page for .csv file import
-- [ ] bb+ page with original pivotjs functionality
-- [ ] bb+ nfl draft pick history aka "they could have drafted who?"
-- [ ] get data functions for all bb data assets
+- [x] preview functions for all bbUpdate functions.
+- [x] .csv league summary output file
+- [x] bb+ landing page
+- [x] bb+ page for .csv file import
+- [x] bb+ page with original pivotjs functionality
+- [x] bb+ nfl draft pick history aka "they could have drafted who?"
+- [x] get data functions for all bb data assets
+- [x] FAAB Flow
 - [ ] slack app to search and return keeper values
+- [ ] mVAKR+
+- [ ] tradeGPT

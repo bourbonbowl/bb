@@ -6,6 +6,9 @@ import datetime
 import bb
 
 def update_db():
+	'''
+    function updates the db data
+	'''
 	players = json.loads(requests.get(bb.config.url_pre['player'] + bb.config.url_suf['player']).text)
 	with open('players.json','w') as f:
 		json.dump(players,f,indent=4)
@@ -17,6 +20,9 @@ def update_db():
 		ul.upload_from_filename(fn)
 
 def lookupPlayer(id):
+	'''
+	function takes player id and returns player name team and position
+	'''
 	players = json.loads(requests.get(bb.config.url_pre['player'] + bb.config.url_suf['player']).text)
 	player_detail = str(players[str(id)]['first_name']) + ' ' + str(players[str(id)]['last_name']) + ' - ' + str(players[str(id)]['team']) + ' - ' + str(players[str(id)]['position'])
 	return player_detail
