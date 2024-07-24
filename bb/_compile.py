@@ -47,7 +47,11 @@ def bb_summary_output():
             bb_users.update({user['user_id']:user['display_name']})
 
     # compile rostered players
-    roster = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/rosters.json').download_as_string())
+    current_week = int(datetime.datetime.today().strftime("%V"))
+    if current_week not in [36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,1,2]:
+        roster = json.loads(bb.config.bucket.blob('resources/data/' + '2024' + '/rosters.json').download_as_string())
+    else:
+        roster = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/rosters.json').download_as_string())
     bb_rostered_players = {}
     for team in roster:
         for player in team['players']:
