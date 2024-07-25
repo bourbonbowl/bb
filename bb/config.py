@@ -7,6 +7,7 @@ import random
 import datetime
 
 current_league_year = '2023'
+next_league_year = '2024'
 storage_client = storage.Client('bourbon-bowl')
 bucket = storage_client.bucket('www.bourbon-bowl.com') # prod
 # bucket = storage_client.bucket('dev-www.bourbon-bowl.com') # dev
