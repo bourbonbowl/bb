@@ -20,7 +20,10 @@ def get_api():
     '''
     function loads and returns data from the api
     '''
-    users = json.loads(requests.get(bb.config.url_pre['user'] + bb.config.current_league_id + bb.config.url_suf['user']).text)
+    if current_week not in [36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,1,2]:
+        users = json.loads(requests.get(bb.config.url_pre['user'] + bb.config.next_league_year + bb.config.url_suf['user']).text)
+    else:
+        users = json.loads(requests.get(bb.config.url_pre['user'] + bb.config.current_league_id + bb.config.url_suf['user']).text)
     return users
 
 def preview_db():
@@ -71,7 +74,7 @@ def update_db():
             print('users - ' + bb.config.league_info[i]['year'] + ': league is archived, using archived data')
     for i in lg_fetch:
         year = bb.config.league_info[i]['year']
-        users = json.loads(requests.get(bb.config.url_pre['user'] + bb.config.current_league_id + bb.config.url_suf['user']).text)
+        users = json.loads(requests.get(bb.config.url_pre['user'] + i + bb.config.url_suf['user']).text)
         with open('users.json','w') as f:
             json.dump(users,f,indent=4)
             f.close()
