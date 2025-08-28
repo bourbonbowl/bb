@@ -6,8 +6,8 @@ from google.cloud import storage
 import random
 import datetime
 
-current_league_year = '2024'
-next_league_year = '2024'
+current_league_year = '2025'
+next_league_year = '2025'
 storage_client = storage.Client('bourbon-bowl')
 bucket = storage_client.bucket('www.bourbon-bowl.com') # prod
 # bucket = storage_client.bucket('dev-www.bourbon-bowl.com') # dev
