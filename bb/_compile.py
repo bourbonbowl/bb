@@ -91,6 +91,8 @@ def bb_summary_output():
                     if key not in bb_completed_waivers:
                         bb_completed_waivers[key] = {}
                         bb_completed_waivers[key].update({i['status_updated']:i['settings']['waiver_bid']})
+                    else:
+                        bb_completed_waivers[key].update({i['status_updated']:i['settings']['waiver_bid']})
 
     # compile most recent pickup
     bb_recent_waiver = {}
