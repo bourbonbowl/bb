@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='bb',
-    version='3.0.0',
+    version='4.0.0',
     description='a module to update the bourbon bowl fantasy football league',
     author='bourbonbowl',
     author_email='bowlbourbon@gmail.com',
