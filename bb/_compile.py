@@ -37,7 +37,7 @@ def bb_summary_output():
     # get players
     current_week = int(datetime.datetime.today().strftime("%V"))
     players = json.loads(bb.config.bucket.blob('resources/data/' + 'players.json').download_as_string())
-    if current_week not in [36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,1,2]:
+    if current_week not in [35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,1,2]:
         users = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.next_league_year + '/users.json').download_as_string())
     else:
         users = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/users.json').download_as_string())
@@ -51,7 +51,7 @@ def bb_summary_output():
 
     # compile rostered players
     current_week = int(datetime.datetime.today().strftime("%V"))
-    if current_week not in [36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,1,2]:
+    if current_week not in [35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,1,2]:
         roster = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.next_league_year + '/rosters.json').download_as_string())
     else:
         roster = json.loads(bb.config.bucket.blob('resources/data/' + bb.config.current_league_year + '/rosters.json').download_as_string())
